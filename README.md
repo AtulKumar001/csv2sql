@@ -1,1 +1,2 @@
-# csv2sql
+# Uses:
+$ python csv2sql.py
