@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import csv
 
 table_name = input("Enter File name: ")
