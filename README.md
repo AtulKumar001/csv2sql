@@ -3,7 +3,7 @@
 bash```
 $ python3 csv2sql.py <CSV_FILE_NAME> <TABLE_NAME>
 ```
-#R this is for large csv file
+## this is for large csv file
 bash```
 $ python3 csv2sql_pro.py <CSV_FILE_NAME> <TABLE_NAME>
 ```
