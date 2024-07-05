@@ -1,9 +1,15 @@
 #!/usr/bin/python3
-import csv
+import csv, sys
 
-table_name = input("Enter File name: ")
-file = open(input("Enter CSV File Path: "), newline='')
+if len(sys.argv) != 3:
+    print(f"Uses: python3 {sys.argv[0]} <CSV_FILE_NAME> <TABLE_NAME>")
+    print()
+    exit()
+
+file = open(sys.argv[1], newline='')
 csvreader = csv.reader(file)
+
+table_name = sys.argv[2]
 
 fields = next(csvreader)
 table = f"CREATE TABLE IF NOT EXISTS `{table_name}` (\r\n"
@@ -16,18 +22,15 @@ for r in fields:
     i += 1
 table += ");\r\n"
 
-insert_data = f"INSERT INTO '{table_name}` {tuple(fields)} VALUES \r\n".replace("'", "`")
+initial_data = f"INSERT INTO '{table_name}` {tuple(fields)} VALUES".replace("'", "`")
+insert_data = ""
 while True:
     try:
-        insert_data += str(tuple(next(csvreader)))+",\r\n"
+        insert_data += f'{initial_data} {str(tuple(next(csvreader)))};\r\n'
     except Exception as e:
         break
+        
 list_insert_data = list(insert_data)
-del list_insert_data[-1]
-del list_insert_data[-1]
-del list_insert_data[-1]
-list_insert_data.append(";")
-
 insert_data  = "".join(list_insert_data)
 
 sql_data = f'''
@@ -53,4 +56,4 @@ file.close()
 f = open(f"{table_name}.sql", "w")
 f.write(sql_data)
 f.close()
-print(f"{table_name}.sql created Successfully.")
+print(f"{table_name}.sql created Successfully.")	
